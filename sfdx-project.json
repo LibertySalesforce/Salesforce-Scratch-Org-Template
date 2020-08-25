@@ -1,0 +1,35 @@
+{
+  "packageDirectories": [
+    {
+      "path": "sfdx-source/pre-deployment",
+      "default": false
+    },
+    {
+      "path": "sfdx-source/deployment",
+      "default": true,
+      "dependencies": [
+        {
+          "package": "health-cloud@226.5.0-1"
+        },
+        {
+          "package": "contact-tracing@226.2.0-1"
+        }
+      ]
+    },
+    {
+      "path": "sfdx-source/unpackaged",
+      "default": false
+    },
+    {
+      "path": "sfdx-source/untracked",
+      "default": false
+    }
+  ],
+  "namespace": "",
+  "sfdcLoginUrl": "https://login.salesforce.com",
+  "sourceApiVersion": "49.0",
+  "packageAliases": {
+    "health-cloud@226.5.0-1": "04t1C000000WgjDQAS",
+    "contact-tracing@226.2.0-1": "04t4S000000nKnUQAU"
+  }
+}

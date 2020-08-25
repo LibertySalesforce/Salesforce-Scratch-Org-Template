@@ -1,0 +1,45 @@
+on:
+  push:
+    branches:
+      - master
+      - "feature/**"
+
+jobs:
+  run_unit_tests:
+    runs-on: ubuntu-latest
+    env:
+      SCRATCH_ORG_NAME: ci-${{github.run_id}}-${{github.run_number}}
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Install SFDX Client
+        run: |
+          sudo npm -g install sfdx-cli
+          sfdx --version
+          sfdx plugins --core
+
+      - name: Install Toolbox plugin
+        run: echo "y" | sfdx plugins:install @dx-cli-toolbox/sfdx-toolbox-package-utils
+
+      - name: Authenticate DevHub
+        run: |
+          echo "${SALESFORCE_JWT_SECRET_KEY}" > ~/server.key
+          sfdx force:auth:jwt:grant --clientid ${{ secrets.SALESFORCE_CONSUMER_KEY }} --jwtkeyfile ~/server.key --username ${{ secrets.SALESFORCE_DEVHUB_USERNAME}} -s -a devhub
+        env:
+          SALESFORCE_JWT_SECRET_KEY: ${{ secrets.SALESFORCE_JWT_SECRET_KEY }}
+
+      - name: Create scratch org
+        run: sfdx force:org:create -a $SCRATCH_ORG_NAME -f config/project-scratch-def.json -v devhub
+
+      - name: Install dependencies
+        run: sfdx toolbox:package:dependencies:install -u $SCRATCH_ORG_NAME -v devhub -w 60
+        
+      - name: Push
+        run: sfdx force:source:push -u $SCRATCH_ORG_NAME
+
+      - name: Run tests
+        run: sfdx force:apex:test:run -r human -u $SCRATCH_ORG_NAME
+
+      - name: Finalize
+        if: always()
+        run: sfdx force:org:delete -p -u $SCRATCH_ORG_NAME -v devhub

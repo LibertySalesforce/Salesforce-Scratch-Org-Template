@@ -1,0 +1,1 @@
+Everything testing related is placed into this directory.

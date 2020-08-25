@@ -1,0 +1,25 @@
+# General Project related
+.DS_Store
+target/
+temp/
+/deploy/*
+/debug/
+**/dep-dir.txt
+*.prefs
+build.properties
+.execanon
+/images
+
+# VS Code IDE Related
+.vscode/
+.history/
+
+# SFDX Related
+.sfdx/
+sfdx-source/untracked/*
+!sfdx-source/untracked/README.md
+
+# NPM Related
+package.json
+/node_modules
+package-lock.json

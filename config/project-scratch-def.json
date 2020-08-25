@@ -1,0 +1,29 @@
+{
+  "orgName": "OHRS Development",
+  "edition": "Enterprise",
+  "features": [
+    "PersonAccounts",
+    "ContactsToMultipleAccounts",
+    "HealthCloudUser",
+    "Communities",
+    "ForceComPlatform",
+    "DevelopmentWave"
+  ],
+  "settings": {
+    "analyticsSettings": {
+      "enableAnalyticsSharingEnable": true
+    },
+    "lightningExperienceSettings": {
+      "enableS1DesktopEnabled": true
+    },
+    "surveySettings": {
+      "enableSurvey": true
+    },
+    "experienceBundleSettings": {
+      "enableExperienceBundleMetadata": true
+    },
+    "communitiesSettings": {
+      "enableNetworksEnabled": true
+    }
+  }
+}
